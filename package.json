@@ -1,6 +1,6 @@
 {
   "name": "express-registry",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "registry based express framework",
   "engineStrict": true,
   "engines": {
@@ -19,8 +19,8 @@
     "test": "mocha test/**/*.test.ts --exit",
     "test-only": "mocha test/**/*.test.ts --exit",
     "test:watch": "mocha --watch --reporter min",
-    "changelog": "standard-version",
-    "prepare": "npm run build && npm run changelog"
+    "prepare": "npm run build",
+    "release": "standard-version && npm publish && git push --follow-tags origin master"
   },
   "husky": {
     "hooks": {
