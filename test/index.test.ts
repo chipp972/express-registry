@@ -1,9 +1,13 @@
 import { expect } from 'chai';
-import getSingleton from '../src/index';
+import { clearGlobals, getExpressRegistry } from '../src/index';
 
-describe('Hello World', function() {
+describe('Express Registry', function() {
+  afterEach(function() {
+    clearGlobals();
+  });
+
   it('should work', async function() {
-    const registry = getSingleton(7000);
+    const registry = getExpressRegistry(7000);
     const conf = { a: 'a' };
     registry.addConfig(conf);
     expect(registry.getConfig()).to.deep.equal(conf);

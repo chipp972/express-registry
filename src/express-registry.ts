@@ -15,12 +15,12 @@ export interface RouterObject {
   router: Router;
 }
 
-export class ExpressRegistry extends ModuleRegistry {
+export class ExpressRegistry<Config, Lib, Service> extends ModuleRegistry {
   private port: number;
   private app: Application;
-  private config: { [configName: string]: any };
-  private lib: { [libName: string]: any };
-  private services: { [serviceName: string]: any };
+  private config: Config | { [configName: string]: any };
+  private lib: Lib | { [libName: string]: any };
+  private services: Service | { [serviceName: string]: any };
   private middlewares: RouterObject[];
   private routes: HandlerObject[];
 
@@ -37,7 +37,6 @@ export class ExpressRegistry extends ModuleRegistry {
 
   public addConfig(config: { [configName: string]: any }) {
     this.config = Object.assign(this.config, config);
-    this.registerModule(this.config, 'config');
     return this;
   }
 
@@ -47,13 +46,11 @@ export class ExpressRegistry extends ModuleRegistry {
 
   public addLib(lib: { [libName: string]: any }) {
     this.lib = Object.assign(this.lib, lib);
-    this.registerModule(this.lib, 'lib');
     return this;
   }
 
   public addServices(services: { [serviceName: string]: any }) {
     this.services = Object.assign(this.services, services);
-    this.registerModule(this.services, 'services');
     return this;
   }
 
