@@ -1,5 +1,9 @@
 import { ExpressRegistry } from './express-registry';
-export { ExpressRegistry, HandlerObject, RouterObject } from './express-registry';
+export {
+  ExpressRegistry,
+  HandlerObject,
+  RouterObject,
+} from './express-registry';
 
 const EXPRESS_REGISTRY = Symbol.for('expressRegistry');
 

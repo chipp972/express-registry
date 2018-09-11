@@ -1,19 +1,23 @@
 import { Server } from 'http';
 
+function getBind(server: Server) {
+  const addr = server.address();
+  return typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
+}
+
 /**
  * Handle server errors
  * @param {Server} server
  * @return {void}
  */
 export function onError(server: Server) {
-  server.on('error', (err: any) => {
+  return server.on('error', (err: any) => {
     if (err.syscall !== 'listen') {
       console.error(err.message);
       throw err;
     }
 
-    const bind = `Port 5000`;
-
+    const bind = getBind(server);
     switch (err.code) {
       case 'EACCES':
         console.error(`${bind} requires elevated privileges`);
@@ -36,8 +40,7 @@ export const onExit = () => {
 };
 
 export const onListening = (server: Server) => () => {
-  const addr = server.address();
-  const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
+  const bind = getBind(server);
   console.info(`Server Listening on ${bind}`);
   console.info(`Process pid is ${process.pid}`);
 };
